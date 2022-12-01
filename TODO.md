@@ -1,0 +1,7 @@
+- [ ] Add bootstrap (with all its crutches)
+- [ ] Dropdown with chart type
+- [ ] Dropdown with part of the day
+- [ ] Service that hit backend
+- [ ] Add 2021-2022 years data to db
+- [ ] Integration into 1 project
+- [ ] Publish to Heroku - requires either save data in Mongo cluster or create docker image

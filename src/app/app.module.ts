@@ -9,7 +9,7 @@ import {ChartjsModule} from "@ctrl/ngx-chartjs";
   ],
   imports: [
     BrowserModule,
-    ChartjsModule
+    ChartjsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

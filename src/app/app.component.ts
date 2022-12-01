@@ -7,13 +7,32 @@ export interface ExportChart {
   data: ChartData;
 }
 
+import {
+  BarController,
+  BarElement,
+  LineController,
+  LineElement,
+  PointElement,
+  Chart,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+// What you register will depend on what chart you are using and features used.
+Chart.register(BarController, BarElement,
+  LineController, LineElement, PointElement,
+  CategoryScale, LinearScale, Title, Tooltip, Legend
+);
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  // '2.00,-1.00,0.00,-2.31,1.56,-14.55,-6.73,-3.42,2.17,-0.25,3.73,7.73'
+
   chartConfig: ExportChart = {
     data: {
       labels: [
@@ -24,33 +43,33 @@ export class AppComponent {
       datasets: [
         {
           data: [2.00, -1.00, 0.00, -2.31, 1.56, -14.55, -6.73, -3.42, 2.17, -0.25, 3.73, 7.73],
-          label: 'Label A',
+          label: 'Temperature',
           backgroundColor: 'rgba(255, 255, 0, 0.4)',
-          borderColor: 'yellow',
-          pointBackgroundColor: 'yellow',
-          pointBorderColor: 'yellow',
+          borderColor: 'blue',
+          pointBackgroundColor: 'blue',
+          pointBorderColor: 'blue',
           borderWidth: 2
         }
       ]
     },
-    type: 'bar',
+    type: 'line',
     options: {
       responsive: true,
-      aspectRatio: 2,
-      scales: {
-        y: {
-          type: 'linear',
-          position: 'left',
-          min: 0,
-          max: 100,
-          ticks: { stepSize: 25 }
-        }
-      },
-      elements: {
-        line: {
-          tension: 0
-        }
-      },
+      /*  aspectRatio: 2,
+        scales: {
+          y: {
+            type: 'linear',
+            position: 'left',
+            min: 0,
+            max: 100,
+            ticks: { stepSize: 25 }
+          }
+        },
+        elements: {
+          line: {
+            tension: 0
+          }
+        },*/
       plugins: {
         tooltip: {
           enabled: true,
