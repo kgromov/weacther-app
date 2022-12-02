@@ -1,7 +1,8 @@
-- [ ] Add bootstrap (with all its crutches)
+- [x] Add bootstrap (with all its crutches)
+- [ ] Datapicker to select day
 - [ ] Dropdown with chart type
-- [ ] Dropdown with part of the day
+- [x] Legend with part of the day
 - [ ] Service that hit backend
 - [ ] Add 2021-2022 years data to db
-- [ ] Integration into 1 project
-- [ ] Publish to Heroku - requires either save data in Mongo cluster or create docker image
+- [ ] Integration into 1 project with backend or make it runtime with saving to local storage (parsing is require)
+- [?] Publish to Heroku - requires either save data in Mongo cluster or create docker image

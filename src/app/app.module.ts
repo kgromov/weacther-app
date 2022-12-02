@@ -10,6 +10,7 @@ import {ChartjsModule} from "@ctrl/ngx-chartjs";
   imports: [
     BrowserModule,
     ChartjsModule,
+    // BsDatepickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

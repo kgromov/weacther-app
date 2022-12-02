@@ -1,4 +1,23 @@
+<ul class="nav nav-tabs float-end">
+  <li class="nav-item">
+<!--    <label for="dayOfYear" class="col-form-label mr-2">Select day</label>-->
+<!--    <input #dayOfYear id="dayOfYear" type="date" class="px-2" (click)="onDateChange()"/>-->
+<!--    <ngx-datepicker  [textContent]="'Select day'" [initDate]="currentDate"></ngx-datepicker>-->
+  </li>
+   <li class="nav-item dropdown">
+     <a class="nav-link dropdown-toggle"
+        data-bs-toggle="dropdown" href="#"
+        role="button"
+        aria-haspopup="true"
+        aria-expanded="false">Chart type</a>
+     <div class="dropdown-menu">
+       <a class="dropdown-item" *ngFor="let type of chartTypes" (click)="onTypeChanged(type)">{{ type }}</a>
+     </div>
+   </li>
+</ul>
+
 <div class="container">
+  <h2 class="text-center dim">Weather in Odessa for last 10 years</h2>
   <div class="row">
     <div class="col-12">
       <div class="card">

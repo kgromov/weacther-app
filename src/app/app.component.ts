@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ChartData, ChartOptions, ChartType} from 'chart.js';
 
 export interface ExportChart {
@@ -32,6 +32,10 @@ Chart.register(BarController, BarElement,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  chartTypes: ChartType[] = ['bar', 'line'];
+  currentDate: Date = new Date();
+
+  @ViewChild("dayOfYear", {static: false}) dauOfYearControl: ElementRef | undefined;
 
   chartConfig: ExportChart = {
     data: {
@@ -43,7 +47,35 @@ export class AppComponent {
       datasets: [
         {
           data: [2.00, -1.00, 0.00, -2.31, 1.56, -14.55, -6.73, -3.42, 2.17, -0.25, 3.73, 7.73],
-          label: 'Temperature',
+          label: 'Morning',
+          backgroundColor: 'rgba(255, 255, 0, 0.4)',
+          borderColor: 'yellow',
+          pointBackgroundColor: 'yellow',
+          pointBorderColor: 'yellow',
+
+          borderWidth: 2
+        },
+        {
+          data: [3.00, -1.00, 0.00, 4.25, 2.00, -6.55, -5.36, 1.55, 6.09, 1.00, 4.33, 10.55],
+          label: 'Afternoon',
+          backgroundColor: 'rgba(255, 255, 0, 0.4)',
+          borderColor: 'orange',
+          pointBackgroundColor: 'orange',
+          pointBorderColor: 'red',
+          borderWidth: 2
+        },
+        {
+          data: [20.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00],
+          label: 'Evening',
+          backgroundColor: 'rgba(255, 255, 0, 0.4)',
+          borderColor: 'cyan',
+          pointBackgroundColor: 'cyan',
+          pointBorderColor: 'cyan',
+          borderWidth: 2
+        },
+        {
+          data: [1.00, -6.00, 0.00, -4.00, 0.00, -15.82, -7.55, -5.81, -0.22, -1.67, 2.92, 9.23],
+          label: 'Night',
           backgroundColor: 'rgba(255, 255, 0, 0.4)',
           borderColor: 'blue',
           pointBackgroundColor: 'blue',
@@ -55,31 +87,44 @@ export class AppComponent {
     type: 'line',
     options: {
       responsive: true,
-      /*  aspectRatio: 2,
-        scales: {
-          y: {
-            type: 'linear',
-            position: 'left',
-            min: 0,
-            max: 100,
-            ticks: { stepSize: 25 }
-          }
-        },
-        elements: {
-          line: {
-            tension: 0
-          }
-        },*/
+      aspectRatio: 2,
+      /* scales: {
+         y: {
+           type: 'linear',
+           position: 'left',
+           min: 0,
+           max: 100,
+           ticks: { stepSize: 25 }
+         }
+       },
+       elements: {
+         line: {
+           tension: 0
+         }
+       },*/
       plugins: {
         tooltip: {
           enabled: true,
           position: 'nearest'
         },
         legend: {
-          display: false,
-          position: 'top'
+          display: true,
+          position: 'top',
+          labels: {
+            font: {
+              size: 14
+            }
+          }
         }
       }
     }
   };
+
+  onDateChange() {
+    console.log('Day changed to ', this.dauOfYearControl?.nativeElement.value);
+  }
+
+  onTypeChanged(chartType: string) {
+    console.log('Selected type = ', chartType);
+  }
 }
