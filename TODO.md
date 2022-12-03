@@ -1,5 +1,5 @@
 - [x] Add bootstrap (with all its crutches)
-- [ ] Datapicker to select day
+- [x] Datapicker to select day
 - [ ] Dropdown with chart type
 - [x] Legend with part of the day
 - [ ] Service that hit backend

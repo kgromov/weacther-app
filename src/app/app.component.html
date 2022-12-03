@@ -3,6 +3,12 @@
 <!--    <label for="dayOfYear" class="col-form-label mr-2">Select day</label>-->
 <!--    <input #dayOfYear id="dayOfYear" type="date" class="px-2" (click)="onDateChange()"/>-->
 <!--    <ngx-datepicker  [textContent]="'Select day'" [initDate]="currentDate"></ngx-datepicker>-->
+    <input type="text"
+           class="form-control"
+           placeholder="Datepicker"
+           [minDate]="minDate"
+           [maxDate]="maxDate"
+           bsDatepicker [bsValue]="currentDate">
   </li>
    <li class="nav-item dropdown">
      <a class="nav-link dropdown-toggle"

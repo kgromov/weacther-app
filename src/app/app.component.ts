@@ -34,6 +34,8 @@ Chart.register(BarController, BarElement,
 export class AppComponent {
   chartTypes: ChartType[] = ['bar', 'line'];
   currentDate: Date = new Date();
+  minDate: Date = new Date('2010-01-01');
+  maxDate: Date = new Date('2022-12-31');
 
   @ViewChild("dayOfYear", {static: false}) dauOfYearControl: ElementRef | undefined;
 
