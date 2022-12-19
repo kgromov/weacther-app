@@ -4,6 +4,8 @@ import {AppComponent} from './app.component';
 import {ChartjsModule} from "@ctrl/ngx-chartjs";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+import {HttpClientModule} from "@angular/common/http";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -11,6 +13,8 @@ import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     ChartjsModule,
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot()

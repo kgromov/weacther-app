@@ -1,5 +1,29 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {ChartData, ChartOptions, ChartType} from 'chart.js';
+import {Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  BarController,
+  BarElement,
+  CategoryScale,
+  Chart,
+  ChartData,
+  ChartDataset,
+  ChartOptions,
+  ChartType,
+  Legend,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip
+} from 'chart.js';
+import {WeatherServiceService} from "./services/weather-service.service";
+import {BsDatepickerDirective} from "ngx-bootstrap/datepicker";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {WeatherData} from "./model/weather-data";
+import {Subject, takeUntil} from "rxjs";
+import {formatDate} from "@angular/common";
+import {ChartjsComponent} from "@ctrl/ngx-chartjs";
+import {DEFAULT_CHART_CONFIG} from "./model/chart-config";
 
 export interface ExportChart {
   options: ChartOptions;
@@ -7,19 +31,6 @@ export interface ExportChart {
   data: ChartData;
 }
 
-import {
-  BarController,
-  BarElement,
-  LineController,
-  LineElement,
-  PointElement,
-  Chart,
-  CategoryScale,
-  LinearScale,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
 // What you register will depend on what chart you are using and features used.
 Chart.register(BarController, BarElement,
   LineController, LineElement, PointElement,
@@ -31,102 +42,82 @@ Chart.register(BarController, BarElement,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   chartTypes: ChartType[] = ['bar', 'line'];
-  currentDate: Date = new Date();
-  minDate: Date = new Date('2010-01-01');
-  maxDate: Date = new Date('2022-12-31');
+  currentDate: string = formatDate(new Date(), 'YYYY-MM-dd', this.locale);
+  // auxiliary
+  /* minDate: Date = new Date('2010-01-01');
+   maxDate: Date = new Date('2022-12-31');*/
+  data: WeatherData[] = [];
+  chartConfig: ExportChart = DEFAULT_CHART_CONFIG;
+  private $subject: Subject<void> = new Subject<void>();
 
-  @ViewChild("dayOfYear", {static: false}) dauOfYearControl: ElementRef | undefined;
+  // @ts-ignore
+  @ViewChild(BsDatepickerDirective, {static: false}) datepicker: BsDatepickerDirective;
+  // @ts-ignore
+  @ViewChild(ChartjsComponent, {static: false}) chart: ChartjsComponent;
+  // @ts-ignore
+  form: FormGroup;
 
-  chartConfig: ExportChart = {
-    data: {
-      labels: [
-        '2010-01-01', '2011-01-01', '2012-01-01', '2013-01-01',
-        '2014-01-01', '2015-01-01', '2016-01-01', '2017-01-01',
-        '2018-01-01', '2019-01-01', '2020-01-01', '2021-01-01'
-      ],
-      datasets: [
-        {
-          data: [2.00, -1.00, 0.00, -2.31, 1.56, -14.55, -6.73, -3.42, 2.17, -0.25, 3.73, 7.73],
-          label: 'Morning',
-          backgroundColor: 'rgba(255, 255, 0, 0.4)',
-          borderColor: 'yellow',
-          pointBackgroundColor: 'yellow',
-          pointBorderColor: 'yellow',
+  constructor(@Inject(LOCALE_ID) public locale: string,
+              private weatherService: WeatherServiceService,
+              private fb: FormBuilder) {
+  }
 
-          borderWidth: 2
-        },
-        {
-          data: [3.00, -1.00, 0.00, 4.25, 2.00, -6.55, -5.36, 1.55, 6.09, 1.00, 4.33, 10.55],
-          label: 'Afternoon',
-          backgroundColor: 'rgba(255, 255, 0, 0.4)',
-          borderColor: 'orange',
-          pointBackgroundColor: 'orange',
-          pointBorderColor: 'red',
-          borderWidth: 2
-        },
-        {
-          data: [20.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00],
-          label: 'Evening',
-          backgroundColor: 'rgba(255, 255, 0, 0.4)',
-          borderColor: 'cyan',
-          pointBackgroundColor: 'cyan',
-          pointBorderColor: 'cyan',
-          borderWidth: 2
-        },
-        {
-          data: [1.00, -6.00, 0.00, -4.00, 0.00, -15.82, -7.55, -5.81, -0.22, -1.67, 2.92, 9.23],
-          label: 'Night',
-          backgroundColor: 'rgba(255, 255, 0, 0.4)',
-          borderColor: 'blue',
-          pointBackgroundColor: 'blue',
-          pointBorderColor: 'blue',
-          borderWidth: 2
-        }
-      ]
-    },
-    type: 'line',
-    options: {
-      responsive: true,
-      aspectRatio: 2,
-      /* scales: {
-         y: {
-           type: 'linear',
-           position: 'left',
-           min: 0,
-           max: 100,
-           ticks: { stepSize: 25 }
-         }
-       },
-       elements: {
-         line: {
-           tension: 0
-         }
-       },*/
-      plugins: {
-        tooltip: {
-          enabled: true,
-          position: 'nearest'
-        },
-        legend: {
-          display: true,
-          position: 'top',
-          labels: {
-            font: {
-              size: 14
-            }
-          }
-        }
-      }
-    }
-  };
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      selectedDate: null
+    });
 
-  onDateChange() {
-    console.log('Day changed to ', this.dauOfYearControl?.nativeElement.value);
+    this.selectedDate.valueChanges
+      .pipe(takeUntil(this.$subject))
+      .subscribe(value => {
+        const selectedDate: string = formatDate(value, 'YYYY-MM-dd', this.locale);
+        this.weatherService.getWeatherDayInRange(selectedDate)
+          .subscribe(data => {
+            this.data = data;
+            this.updateChartData(this.data);
+          });
+      });
+
+    this.selectedDate.patchValue(new Date());
+  }
+
+  private get selectedDate(): FormControl {
+    return this.form.get('selectedDate') as FormControl;
   }
 
   onTypeChanged(chartType: string) {
     console.log('Selected type = ', chartType);
+  }
+
+  ngOnDestroy(): void {
+    this.$subject.next();
+    this.$subject.complete();
+  }
+
+  private updateChartData(weatherData: WeatherData[]): void {
+    const labelsData: any[] = [];
+    const morningData: any[] = [];
+    const afternoonData: any[] = [];
+    const eveningData: any[] = [];
+    const nightData: any[] = [];
+    weatherData.forEach(dayData => {
+      labelsData.push(dayData.date);
+      morningData.push(dayData.morningTemperature);
+      afternoonData.push(dayData.afternoonTemperature);
+      eveningData.push(dayData.eveningTemperature);
+      nightData.push(dayData.nightTemperature);
+    });
+
+    this.chartConfig.data.labels = [...labelsData];
+    const datasets: ChartDataset[] = this.chartConfig.data.datasets;
+    datasets[0].data = [...morningData];
+    datasets[1].data = [...afternoonData];
+    datasets[2].data = [...eveningData];
+    datasets[3].data = [...nightData];
+    console.log('Chart data: ', this.chartConfig);
+    // to trigger refresh
+    this.chart.updateChart();
   }
 }
