@@ -21,8 +21,8 @@ export class WeatherServiceService {
   }
 
   public getWeatherDayInRange(day: string | Date, years?: number): Observable<WeatherData[]> {
-    const params: any = {years: years};
-    return this.http.get<WeatherData[]>(`${this.baseUrl}/${day}`, {params: params});
+    const params: any = {years: years || null};
+    return this.http.get<WeatherData[]>(`${this.baseUrl}/${day}`);
   }
 
 }
