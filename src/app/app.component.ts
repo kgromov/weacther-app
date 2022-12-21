@@ -1,18 +1,19 @@
 import {Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
+  ArcElement,
   BarController,
-  BarElement,
+  BarElement, BubbleController,
   CategoryScale,
   Chart,
   ChartData,
   ChartDataset,
   ChartOptions,
-  ChartType,
+  ChartType, DoughnutController,
   Legend,
   LinearScale,
   LineController,
-  LineElement,
-  PointElement,
+  LineElement, PieController, PieControllerChartOptions, PieDataPoint,
+  PointElement, PolarAreaController, RadarController, RadialLinearScale, ScatterController,
   Title,
   Tooltip
 } from 'chart.js';
@@ -34,6 +35,12 @@ export interface ExportChart {
 // What you register will depend on what chart you are using and features used.
 Chart.register(BarController, BarElement,
   LineController, LineElement, PointElement,
+  ScatterController,
+  // BubbleController,
+  // PieController,
+  // DoughnutController,
+  PolarAreaController, RadialLinearScale, ArcElement,
+  RadarController,
   CategoryScale, LinearScale, Title, Tooltip, Legend
 );
 
@@ -43,12 +50,13 @@ Chart.register(BarController, BarElement,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  chartTypes: ChartType[] = ['bar', 'line'];
+  chartTypes: ChartType[] = ['bar', 'line', 'scatter', /*'bubble', 'pie', 'doughnut',*/ 'polarArea', 'radar'];
   currentDate: string = formatDate(new Date(), 'YYYY-MM-dd', this.locale);
   // auxiliary
   /* minDate: Date = new Date('2010-01-01');
    maxDate: Date = new Date('2022-12-31');*/
   data: WeatherData[] = [];
+  availableYears: number[] = [1, 2, 3 , 4, 5, 6, 7, 8, 9, 10, 11, 12];
   chartConfig: ExportChart = DEFAULT_CHART_CONFIG;
   private $subject: Subject<void> = new Subject<void>();
 
@@ -66,14 +74,26 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      selectedDate: null
+      selectedDate: null,
+      years: null
     });
 
     this.selectedDate.valueChanges
       .pipe(takeUntil(this.$subject))
       .subscribe(value => {
         const selectedDate: string = formatDate(value, 'YYYY-MM-dd', this.locale);
-        this.weatherService.getWeatherDayInRange(selectedDate)
+        this.weatherService.getWeatherDayInRange(selectedDate, this.years.value)
+          .subscribe(data => {
+            this.data = data;
+            this.updateChartData(this.data);
+          });
+      });
+
+    this.years.valueChanges
+      .pipe(takeUntil(this.$subject))
+      .subscribe(selectedYears => {
+        const selectedDate: string = formatDate(this.selectedDate.value, 'YYYY-MM-dd', this.locale);
+        this.weatherService.getWeatherDayInRange(selectedDate, selectedYears)
           .subscribe(data => {
             this.data = data;
             this.updateChartData(this.data);
@@ -87,8 +107,19 @@ export class AppComponent implements OnInit, OnDestroy {
     return this.form.get('selectedDate') as FormControl;
   }
 
+  public get years(): FormControl {
+    return this.form.get('years') as FormControl;
+  }
+
   onTypeChanged(chartType: string) {
     console.log('Selected type = ', chartType);
+    // @ts-ignore
+    this.chartConfig.type = chartType;
+  }
+
+  onYearsChanged(year: number) {
+    console.log('Selected year = ', year);
+    this.years.setValue(year);
   }
 
   ngOnDestroy(): void {

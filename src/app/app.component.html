@@ -10,6 +10,18 @@
              placeholder="Select date"
              bsDatepicker>
     </li>
+
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle"
+         data-bs-toggle="dropdown" href="#"
+         role="button"
+         aria-haspopup="true"
+         aria-expanded="false">Years to show</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" *ngFor="let year of availableYears" (click)="onYearsChanged(year)">{{ year }}</a>
+      </div>
+    </li>
+
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle"
          data-bs-toggle="dropdown" href="#"
@@ -20,20 +32,10 @@
         <a class="dropdown-item" *ngFor="let type of chartTypes" (click)="onTypeChanged(type)">{{ type }}</a>
       </div>
     </li>
-   <!-- <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle"
-         data-bs-toggle="dropdown" href="#"
-         role="button"
-         aria-haspopup="true"
-         aria-expanded="false">Years to show</a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" *ngFor="let year of years" (click)="onPeriodChanged(year)">{{ year }}</a>
-      </div>
-    </li>-->
   </ul>
 
   <div class="container">
-    <h2 class="text-center dim">Weather in Odessa for last 10 years</h2>
+    <h2 class="text-center dim">Weather in Odessa for last {{ availableYears.length }} years</h2>
     <div class="row">
       <div class="col-12">
         <div class="card">
