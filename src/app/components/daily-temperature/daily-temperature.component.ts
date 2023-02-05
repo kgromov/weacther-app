@@ -42,7 +42,7 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
     this.weatherService.getYearsToShow()
       .subscribe(yearsRange => {
         console.log('Years range = ', yearsRange);
-        const years: number = yearsRange?.maxYear - yearsRange?.minYear;
+        const years: number = yearsRange?.maxYear - yearsRange?.minYear + 1;
         this.availableYears = [...Array(years || 14).keys()].map(i => i + 1)
       });
 

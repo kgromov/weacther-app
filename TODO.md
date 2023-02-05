@@ -1,5 +1,5 @@
 - [x] Add model (daily temperature aggregates)
 - [x] Add corresponding client service endpoints
-- [ ] Decouple (finally :)) app.component
-- [ ] Add routing
-- [ ] New charts with data
+- [x] Decouple (finally :)) app.component
+- [x] Add routing
+- [x] New charts with data

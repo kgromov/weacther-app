@@ -26,6 +26,6 @@ export class SeasonTemperatureService {
     if (years) {
       params.years = years;
     }
-    return this.http.get<YearBySeasonTemperature[]>(`${this.baseUrl}/weather/seasons`, {params: params});
+    return this.http.get<YearBySeasonTemperature[]>(`${this.baseUrl}/weather/seasonsInYear`, {params: params});
   }
 }

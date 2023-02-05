@@ -8,7 +8,9 @@ export enum Season {
 export interface SeasonTemperature {
   year: number,
   season: Season,
-  temperature: number
+  minTemp: number
+  maxTemp: number
+  avgTemp: number
 }
 
 export interface YearBySeasonTemperature {
