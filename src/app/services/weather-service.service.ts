@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {WeatherData} from "../model/weather-data";
+import {WeatherData, YearsRange} from "../model/weather-data";
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -27,6 +27,10 @@ export class WeatherServiceService {
       params.years = years;
     }
     return this.http.get<WeatherData[]>(`${this.baseUrl}/weather/${day}`, {params: params});
+  }
+
+  public getYearsToShow(): Observable<YearsRange> {
+    return this.http.get<YearsRange>(`${this.baseUrl}/weather/range`);
   }
 
 }
