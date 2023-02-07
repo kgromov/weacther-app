@@ -1,54 +1,28 @@
-<form [formGroup]="form">
-  <ul class="nav nav-tabs float-end">
-    <li class="nav-item">
-      <!--    <label for="dayOfYear" class="col-form-label mr-2">Select day</label>-->
-      <!--    <input #dayOfYear id="dayOfYear" type="date" class="px-2" (click)="onDateChange()"/>-->
-      <!--    <ngx-datepicker  [textContent]="'Select day'" [initDate]="currentDate"></ngx-datepicker>-->
-      <input type="text"
-             class="form-control"
-             formControlName="selectedDate"
-             placeholder="Select date"
-             bsDatepicker>
-    </li>
-
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle"
-         data-bs-toggle="dropdown" href="#"
-         role="button"
-         aria-haspopup="true"
-         aria-expanded="false">Years to show</a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" *ngFor="let year of availableYears" (click)="onYearsChanged(year)">{{ year }}</a>
-      </div>
-    </li>
-
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle"
-         data-bs-toggle="dropdown" href="#"
-         role="button"
-         aria-haspopup="true"
-         aria-expanded="false">Chart type</a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" *ngFor="let type of chartTypes" (click)="onTypeChanged(type)">{{ type }}</a>
-      </div>
-    </li>
-  </ul>
-
-  <div class="container">
-    <h2 class="text-center dim">Weather in Odessa for last {{ availableYears.length }} years</h2>
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-            <ngx-chartjs
-              [data]="chartConfig.data"
-              [options]="chartConfig.options"
-              [type]="chartConfig.type"
-              [redraw]="true">
-            </ngx-chartjs>
-          </div>
-        </div>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-4 my-2">
+  <a class="navbar-brand" href="#">Weather in Odessa</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse nav-tabs justify-content-end" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-link" routerLink="/daily"
+         [class.active]="dailyView" (click)="selectDailyView()">
+        Daily
+      </a>
+      <a class="nav-link" routerLink="/season"
+         [class.active]="seasonView" (click)="selectSeasonView()">
+        Seasons
+      </a>
+      <a class="nav-link" routerLink="/year"
+         [class.active]="yearView" (click)="selectYearView()">
+        Years
+      </a>
     </div>
   </div>
-</form>
+</nav>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+
+<footer class="text-center mt-5 mb-2-">Copyright © {{currentYear}} by kgromov</footer>

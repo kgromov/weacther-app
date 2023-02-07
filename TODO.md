@@ -1,9 +1,5 @@
-- [x] Add bootstrap (with all its crutches)
-- [x] Datapicker to select day
-- [x] Dropdown with chart type
-- [x] Dropdown with years range
-- [x] Legend with part of the day
-- [x] Service that hit backend
-- [x] Add 2021-2022 years data to db
-- [ ] Integration into 1 project with backend or make it runtime with saving to local storage (parsing is require)
-- [ ] Publish to Heroku - requires either save data in Mongo cluster or create docker image
+- [x] Add model (daily temperature aggregates)
+- [x] Add corresponding client service endpoints
+- [x] Decouple (finally :)) app.component
+- [x] Add routing
+- [x] New charts with data

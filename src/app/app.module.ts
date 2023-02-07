@@ -6,12 +6,22 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
+import { DailyTemperatureComponent } from './components/daily-temperature/daily-temperature.component';
+import { SeasonTemperatureComponent } from './components/season-temperature/season-temperature.component';
+import { YearTemperatureComponent } from './components/year-temperature/year-temperature.component';
+import {AppRoutingModule} from "./app.routing";
+import { AbstractTemperatureDirective } from './components/abstract-temperature.directive';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DailyTemperatureComponent,
+    SeasonTemperatureComponent,
+    YearTemperatureComponent,
+    AbstractTemperatureDirective
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,

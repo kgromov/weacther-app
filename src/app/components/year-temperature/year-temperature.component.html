@@ -1,0 +1,30 @@
+<!--<ul class="nav nav-tabs float-end">
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle"
+       data-bs-toggle="dropdown" href="#"
+       role="button"
+       aria-haspopup="true"
+       aria-expanded="false">Years to show</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" *ngFor="let year of availableYears" (click)="onYearsChanged(year)">{{ year }}</a>
+    </div>
+  </li>
+</ul>-->
+
+<div class="container">
+  <h2 class="text-center dim">Weather by year for last {{ availableYears.length }} years</h2>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <ngx-chartjs
+            [data]="chartConfig.data"
+            [options]="chartConfig.options"
+            [type]="chartConfig.type"
+            [redraw]="true">
+          </ngx-chartjs>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,3 +5,8 @@ export interface WeatherData {
   eveningTemperature: number,
   nightTemperature: number
 }
+
+export interface YearsRange {
+  minYear: number;
+  maxYear: number;
+}
