@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://weather-app-server-qtrf7qt2z-kgromov.vercel.app'
+  baseUrl: 'https://weather-odessa-app-server.vercel.app'
 };
