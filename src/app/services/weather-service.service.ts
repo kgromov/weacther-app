@@ -30,7 +30,7 @@ export class WeatherServiceService {
   }
 
   public getYearsToShow(): Observable<YearsRange> {
-    return this.http.get<YearsRange>(`${this.baseUrl}/weather/range`);
+    return this.http.get<YearsRange>(`${this.baseUrl}/weather/years`);
   }
 
 }

@@ -4,6 +4,7 @@ import {ExportChart, YEAR_SUMMARY_CHART_CONFIG} from "../../model/chart-config";
 import {ChartjsComponent} from "@ctrl/ngx-chartjs";
 import {SeasonTemperatureService} from "../../services/season-temperatue.service";
 import {ChartDataset} from "chart.js";
+import {WeatherServiceService} from "../../services/weather-service.service";
 
 @Component({
   selector: 'app-year-temperature',
@@ -17,10 +18,17 @@ export class YearTemperatureComponent implements OnInit {
   @ViewChild(ChartjsComponent, {static: false}) chart: ChartjsComponent;
 
   constructor(@Inject(LOCALE_ID) public locale: string,
+              private weatherService: WeatherServiceService,
               private seasonService: SeasonTemperatureService) {
   }
 
   ngOnInit(): void {
+    this.weatherService.getYearsToShow()
+      .subscribe(years => {
+        console.log('Years range = ', years);
+        this.availableYears = [...Array(years || 14).keys()].map(i => i + 1)
+      });
+
     this.seasonService.getYearSummary()
       .subscribe(data => {
         this.data = data;
