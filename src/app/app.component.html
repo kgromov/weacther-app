@@ -10,6 +10,10 @@
          [class.active]="dailyView" (click)="selectDailyView()">
         Daily
       </a>
+      <a class="nav-link" routerLink="/month"
+         [class.active]="monthView" (click)="selectMonthView()">
+        Months
+      </a>
       <a class="nav-link" routerLink="/season"
          [class.active]="seasonView" (click)="selectSeasonView()">
         Seasons

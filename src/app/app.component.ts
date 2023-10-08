@@ -39,23 +39,34 @@ Chart.register(BarController, BarElement,
 export class AppComponent {
   currentYear: number = new Date().getFullYear();
   dailyView: boolean = true;
+  monthView: boolean = false;
   seasonView: boolean = false;
   yearView: boolean = false;
 
   selectDailyView(): void {
     this.dailyView = true;
+    this.monthView = false;
+    this.seasonView = false;
+    this.yearView = false;
+  }
+
+  selectMonthView(): void {
+    this.dailyView = false;
+    this.monthView = true;
     this.seasonView = false;
     this.yearView = false;
   }
 
   selectSeasonView(): void {
     this.dailyView = false;
+    this.monthView = false;
     this.seasonView = true;
     this.yearView = false;
   }
 
   selectYearView(): void {
     this.dailyView = false;
+    this.monthView = false;
     this.seasonView = false;
     this.yearView = true;
   }

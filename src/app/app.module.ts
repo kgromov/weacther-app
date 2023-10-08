@@ -11,6 +11,7 @@ import { SeasonTemperatureComponent } from './components/season-temperature/seas
 import { YearTemperatureComponent } from './components/year-temperature/year-temperature.component';
 import {AppRoutingModule} from "./app.routing";
 import { AbstractTemperatureDirective } from './components/abstract-temperature.directive';
+import { MonthTemperatureComponent } from './components/month-temperature/month-temperature.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AbstractTemperatureDirective } from './components/abstract-temperature.
     DailyTemperatureComponent,
     SeasonTemperatureComponent,
     YearTemperatureComponent,
-    AbstractTemperatureDirective
+    AbstractTemperatureDirective,
+    MonthTemperatureComponent
   ],
   imports: [
     AppRoutingModule,

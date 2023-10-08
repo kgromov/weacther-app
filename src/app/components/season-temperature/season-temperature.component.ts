@@ -1,5 +1,5 @@
 import {Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Season, SeasonTemperature, YearBySeasonTemperature} from "../../model/season-data";
+import {AggregateType, Season, SeasonTemperature, YearBySeasonTemperature} from "../../model/season-data";
 import {ExportChart, SEASONS_CHART_CONFIG} from "../../model/chart-config";
 import {ChartjsComponent} from "@ctrl/ngx-chartjs";
 import {SeasonTemperatureService} from "../../services/season-temperatue.service";
@@ -8,12 +8,6 @@ import {WeatherServiceService} from "../../services/weather-service.service";
 import {Subject} from "rxjs";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {takeUntil} from "rxjs/operators";
-
-enum AggregateType {
-  MAX = 'MAX',
-  MIN = 'MIN',
-  AVG = 'AVG'
-}
 
 @Component({
   selector: 'app-season-temperature',
