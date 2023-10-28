@@ -3,11 +3,13 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {YearByMonthTemperature, YearBySeasonTemperature, YearSummary} from "../model/season-data";
+import {SyncStatus} from "../model/weather-data";
+import {mergeMap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SeasonTemperatureService {
+export class TemperatureService {
   baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) {
@@ -23,10 +25,13 @@ export class SeasonTemperatureService {
     return this.http.get<YearBySeasonTemperature[]>(`${this.baseUrl}/weather/seasons`, {params: params});
   }
 
-  // new Date().toLocaleString('EN', {month: 'long' });
-  public getMonthTemperture(years?: number): Observable<YearByMonthTemperature[]> {
+  public getMonthTemperature(years?: number): Observable<YearByMonthTemperature[]> {
     const params = this.getYearsToShowParams(years);
     return this.http.get<YearByMonthTemperature[]>(`${this.baseUrl}/weather/months`, {params: params});
+  }
+
+  public syncTemperature(): Observable<SyncStatus> {
+    return this.http.get<SyncStatus>(`${this.baseUrl}/sync`);
   }
 
   private getYearsToShowParams(years: number | undefined) {

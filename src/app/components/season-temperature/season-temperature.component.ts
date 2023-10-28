@@ -2,7 +2,7 @@ import {Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild} from '@angul
 import {AggregateType, Season, SeasonTemperature, YearBySeasonTemperature} from "../../model/season-data";
 import {ExportChart, SEASONS_CHART_CONFIG} from "../../model/chart-config";
 import {ChartjsComponent} from "@ctrl/ngx-chartjs";
-import {SeasonTemperatureService} from "../../services/season-temperatue.service";
+import {TemperatureService} from "../../services/temperature.service";
 import {ChartDataset} from "chart.js";
 import {WeatherServiceService} from "../../services/weather-service.service";
 import {Subject} from "rxjs";
@@ -26,7 +26,7 @@ export class SeasonTemperatureComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(LOCALE_ID) public locale: string,
               private weatherService: WeatherServiceService,
-              private seasonService: SeasonTemperatureService,
+              private seasonService: TemperatureService,
               private fb: FormBuilder) {
   }
 

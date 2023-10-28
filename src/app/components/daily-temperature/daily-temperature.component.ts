@@ -3,12 +3,13 @@ import {WeatherServiceService} from "../../services/weather-service.service";
 import {Subject} from "rxjs";
 import {ChartDataset, ChartType} from "chart.js";
 import {formatDate} from "@angular/common";
-import {WeatherData} from "../../model/weather-data";
+import {SyncStatus, WeatherData} from "../../model/weather-data";
 import {DAILY_CHART_CONFIG, ExportChart} from "../../model/chart-config";
 import {BsDatepickerDirective} from "ngx-bootstrap/datepicker";
 import {ChartjsComponent} from "@ctrl/ngx-chartjs";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {takeUntil} from "rxjs/operators";
+import {HttpStatusCode} from "@angular/common/http";
 
 @Component({
   selector: 'app-daily-temperature',
@@ -50,22 +51,14 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.$subject))
       .subscribe(value => {
         const selectedDate: string = formatDate(value, 'YYYY-MM-dd', this.locale);
-        this.weatherService.getWeatherDayInRange(selectedDate, this.years.value)
-          .subscribe(data => {
-            this.data = data;
-            this.updateChartData(this.data);
-          });
+        this.fetchData(selectedDate, this.years.value);
       });
 
     this.years.valueChanges
       .pipe(takeUntil(this.$subject))
       .subscribe(selectedYears => {
         const selectedDate: string = formatDate(this.selectedDate.value, 'YYYY-MM-dd', this.locale);
-        this.weatherService.getWeatherDayInRange(selectedDate, selectedYears)
-          .subscribe(data => {
-            this.data = data;
-            this.updateChartData(this.data);
-          });
+        this.fetchData(selectedDate, selectedYears);
       });
 
     this.selectedDate.patchValue(new Date());
@@ -90,9 +83,28 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
     this.years.setValue(year);
   }
 
+  reloadDataOnSync(syncStatus: SyncStatus): void {
+    if (syncStatus.code === HttpStatusCode.Ok) {
+      const selectedDate: string = formatDate(this.selectedDate.value, 'YYYY-MM-dd', this.locale);
+      this.fetchData(selectedDate, this.years.value);
+    }
+  }
+
+  get latestDate(): string | undefined {
+    return this.data?.length ? this.data[this.data.length - 1].date : undefined;
+  }
+
   ngOnDestroy(): void {
     this.$subject.next();
     this.$subject.complete();
+  }
+
+  private fetchData(selectedDate: string, yearsToShow: number): void {
+    this.weatherService.getWeatherDayInRange(selectedDate, yearsToShow)
+      .subscribe(data => {
+        this.data = data;
+        this.updateChartData(this.data);
+      });
   }
 
   private updateChartData(weatherData: WeatherData[]): void {
@@ -119,4 +131,5 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
     // to trigger refresh
     this.chart.updateChart();
   }
+
 }

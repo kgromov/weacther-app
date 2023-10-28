@@ -4,7 +4,7 @@ import {ExportChart, YEAR_SUMMARY_CHART_CONFIG} from "../../model/chart-config";
 import {ChartjsComponent} from "@ctrl/ngx-chartjs";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {WeatherServiceService} from "../../services/weather-service.service";
-import {SeasonTemperatureService} from "../../services/season-temperatue.service";
+import {TemperatureService} from "../../services/temperature.service";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {ChartDataset} from "chart.js";
@@ -32,7 +32,7 @@ export class MonthTemperatureComponent implements OnInit {
 
   constructor(@Inject(LOCALE_ID) public locale: string,
               private weatherService: WeatherServiceService,
-              private seasonService: SeasonTemperatureService,
+              private seasonService: TemperatureService,
               private fb: FormBuilder) {
   }
 
@@ -49,7 +49,7 @@ export class MonthTemperatureComponent implements OnInit {
         this.availableYears = [...Array(years || 14).keys()].map(i => i + 1)
       });
 
-    this.seasonService.getMonthTemperture()
+    this.seasonService.getMonthTemperature()
       .subscribe(data => {
         this.data = data;
         this.updateChartData(data);

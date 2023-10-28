@@ -1,0 +1,17 @@
+<ng-container *ngIf="showSyncButton">
+  <button *ngIf="!disableSyncButton; else loading"
+          type="button" class="btn btn-outline-success"
+          (click)="onSyncClicked()">
+    <i class="far fa-sync"></i>
+    Sync
+  </button>
+</ng-container>
+<!-- btn-secondary-->
+<ng-template #loading>
+  <button [attr.disabled]="disableSyncButton"
+          type="button" class="btn btn-outline-success">
+<!--    <fa name="cog" animation="spin"></fa>-->
+    <i class="far fa-spinner"></i>
+    Sync
+  </button>
+</ng-template>
