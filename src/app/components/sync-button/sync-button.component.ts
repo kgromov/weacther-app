@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
 import {TemperatureService} from "../../services/temperature.service";
 import {finalize, Subject} from "rxjs";
@@ -11,7 +11,7 @@ import {mergeMap} from "rxjs/operators";
   templateUrl: './sync-button.component.html',
   styleUrls: ['./sync-button.component.css']
 })
-export class SyncButtonComponent implements OnInit, OnDestroy {
+export class SyncButtonComponent implements OnInit, OnChanges, OnDestroy {
   @Input() public latestDate: string | undefined;
   @Output() public onSync: EventEmitter<SyncStatus> = new EventEmitter();
 
@@ -23,9 +23,15 @@ export class SyncButtonComponent implements OnInit, OnDestroy {
               private toastr: ToastrService) {
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    // @ts-ignore
+    if(changes.latestDate && changes.latestDate.currentValue) {
+      console.log('syncButton: latestDate = ', this.latestDate);
+      this.showSyncButton = this.isSyncAvailable;
+    }
+  }
+
   ngOnInit(): void {
-    console.log('latestDate = ', this.latestDate);
-    this.showSyncButton = this.isSyncAvailable;
     // this.showSyncButton = true;
     this.subject$.asObservable()
       .pipe(

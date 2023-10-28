@@ -5,6 +5,7 @@ import {environment} from "../../environments/environment";
 import {YearByMonthTemperature, YearBySeasonTemperature, YearSummary} from "../model/season-data";
 import {SyncStatus} from "../model/weather-data";
 import {mergeMap} from "rxjs/operators";
+import {bo} from "chart.js/dist/chunks/helpers.core";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,10 @@ export class TemperatureService {
   public getMonthTemperature(years?: number): Observable<YearByMonthTemperature[]> {
     const params = this.getYearsToShowParams(years);
     return this.http.get<YearByMonthTemperature[]>(`${this.baseUrl}/weather/months`, {params: params});
+  }
+
+  public isSynced(): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/isSynced`);
   }
 
   public syncTemperature(): Observable<SyncStatus> {

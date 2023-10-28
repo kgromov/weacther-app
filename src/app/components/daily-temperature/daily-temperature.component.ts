@@ -19,6 +19,8 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
   chartTypes: ChartType[] = ['bar', 'line', 'scatter', /*'bubble', 'pie', 'doughnut',*/ 'polarArea', 'radar'];
   data: WeatherData[] = [];
   availableYears: number[] = [];
+  // latestDate: string = formatDate(new Date(), 'YYYY-MM-dd', this.locale);
+  latestDate: string | undefined;
   chartConfig: ExportChart = DAILY_CHART_CONFIG;
   private $subject: Subject<void> = new Subject<void>();
 
@@ -90,10 +92,6 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
     }
   }
 
-  get latestDate(): string | undefined {
-    return this.data?.length ? this.data[this.data.length - 1].date : undefined;
-  }
-
   ngOnDestroy(): void {
     this.$subject.next();
     this.$subject.complete();
@@ -103,6 +101,8 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
     this.weatherService.getWeatherDayInRange(selectedDate, yearsToShow)
       .subscribe(data => {
         this.data = data;
+        this.latestDate = this.data[this.data.length - 1].date;
+        console.log('Daily view: latestDate = ', this.latestDate);
         this.updateChartData(this.data);
       });
   }
