@@ -4,8 +4,6 @@ import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {YearByMonthTemperature, YearBySeasonTemperature, YearSummary} from "../model/season-data";
 import {SyncStatus} from "../model/weather-data";
-import {mergeMap} from "rxjs/operators";
-import {bo} from "chart.js/dist/chunks/helpers.core";
 
 @Injectable({
   providedIn: 'root'
