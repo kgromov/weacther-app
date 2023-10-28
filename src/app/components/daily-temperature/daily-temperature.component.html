@@ -34,7 +34,7 @@
   <div class="container">
     <div class="d-inline">
       <h2 class="text-center dim">Weather for last {{ availableYears.length }} years
-        <sync-button [latestDate]="latestDate" (onSync)="reloadDataOnSync($event)"></sync-button>
+        <sync-button (onSync)="reloadDataOnSync($event)"></sync-button>
       </h2>
     </div>
     <div class="row">
