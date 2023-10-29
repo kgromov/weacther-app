@@ -24,10 +24,13 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/assets/font-awesome-4.7.0/css/font-awesome.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
+              "node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
+              "node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
+              "node_modules/@fortawesome/fontawesome-free/scss/brands.scss"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",

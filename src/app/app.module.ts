@@ -14,6 +14,8 @@ import {AbstractTemperatureDirective} from './components/abstract-temperature.di
 import {MonthTemperatureComponent} from './components/month-temperature/month-temperature.component';
 import {SyncButtonComponent} from './components/sync-button/sync-button.component';
 import {ToastrModule} from "ngx-toastr";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import {ToastrModule} from "ngx-toastr";
     BsDatepickerModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
-    })
+    }),
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

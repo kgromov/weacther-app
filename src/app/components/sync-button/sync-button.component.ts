@@ -5,6 +5,7 @@ import {finalize, Subject} from "rxjs";
 import {SyncStatus} from "../../model/weather-data";
 import {HttpStatusCode} from "@angular/common/http";
 import {mergeMap} from "rxjs/operators";
+import {faSpinner, faSync} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'sync-button',
@@ -54,4 +55,7 @@ export class SyncButtonComponent implements OnInit, OnDestroy {
     this.subject$.next();
     this.subject$.complete();
   }
+
+  protected readonly faSpinner = faSpinner;
+  protected readonly faSync = faSync;
 }

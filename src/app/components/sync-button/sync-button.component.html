@@ -2,7 +2,7 @@
   <button *ngIf="!disableSyncButton; else loading"
           type="button" class="btn btn-outline-success"
           (click)="onSyncClicked()">
-    <i class="far fa-sync"></i>
+   <fa-icon [icon]="faSync"></fa-icon>
     Sync
   </button>
 </ng-container>
@@ -10,8 +10,7 @@
 <ng-template #loading>
   <button [attr.disabled]="disableSyncButton"
           type="button" class="btn btn-outline-success">
-<!--    <fa name="cog" animation="spin"></fa>-->
-    <i class="far fa-spinner"></i>
+    <fa-icon [icon]="faSpinner" [animation]="'spin'"></fa-icon>
     Sync
   </button>
 </ng-template>
