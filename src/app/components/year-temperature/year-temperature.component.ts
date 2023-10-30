@@ -2,7 +2,7 @@ import {Component, Inject, Input, LOCALE_ID, OnInit, ViewChild} from '@angular/c
 import {YearSummary} from "../../model/season-data";
 import {ExportChart, YEAR_SUMMARY_CHART_CONFIG} from "../../model/chart-config";
 import {ChartjsComponent} from "@ctrl/ngx-chartjs";
-import {SeasonTemperatureService} from "../../services/season-temperatue.service";
+import {TemperatureService} from "../../services/temperature.service";
 import {ChartDataset} from "chart.js";
 import {WeatherServiceService} from "../../services/weather-service.service";
 
@@ -19,7 +19,7 @@ export class YearTemperatureComponent implements OnInit {
 
   constructor(@Inject(LOCALE_ID) public locale: string,
               private weatherService: WeatherServiceService,
-              private seasonService: SeasonTemperatureService) {
+              private seasonService: TemperatureService) {
   }
 
   ngOnInit(): void {

@@ -32,7 +32,11 @@
   </ul>
 
   <div class="container">
-    <h2 class="text-center dim">Weather for last {{ availableYears.length }} years</h2>
+    <div class="d-inline">
+      <h2 class="text-center dim">Weather for last {{ availableYears.length }} years
+        <sync-button (onSync)="reloadDataOnSync($event)"></sync-button>
+      </h2>
+    </div>
     <div class="row">
       <div class="col-12">
         <div class="card">

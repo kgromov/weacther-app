@@ -10,3 +10,8 @@ export interface YearsRange {
   minYear: number;
   maxYear: number;
 }
+
+export interface SyncStatus {
+  code: number,
+  message: string
+}
