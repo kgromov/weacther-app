@@ -52,7 +52,6 @@ export class SyncButtonComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subject$.next();
     this.subject$.complete();
   }
 
