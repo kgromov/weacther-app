@@ -19,6 +19,7 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
   chartTypes: ChartType[] = ['bar', 'line', 'scatter', /*'bubble', 'pie', 'doughnut',*/ 'polarArea', 'radar'];
   data: WeatherData[] = [];
   availableYears: number[] = [];
+  selectedYears: number = 0;
   chartConfig: ExportChart = DAILY_CHART_CONFIG;
   private $subject: Subject<void> = new Subject<void>();
 
@@ -40,12 +41,7 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
       years: null
     });
 
-    this.weatherService.getYearsToShow()
-      .subscribe(yearsRange => {
-        console.log('Years range = ', yearsRange);
-        const years: number = yearsRange?.maxYear - yearsRange?.minYear + 1;
-        this.availableYears = [...Array(years || 14).keys()].map(i => i + 1)
-      });
+    this.fetchYearsToShow();
 
     this.selectedDate.valueChanges
       .pipe(takeUntil(this.$subject))
@@ -95,10 +91,19 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
     this.$subject.complete();
   }
 
+  private fetchYearsToShow(): void {
+    this.weatherService.getYearsToShow()
+      .subscribe(years => {
+        console.log('Years range = ', years);
+        this.availableYears = [...Array(years).keys()].map(i => i + 1)
+      });
+  }
+
   private fetchData(selectedDate: string, yearsToShow: number): void {
     this.weatherService.getWeatherDayInRange(selectedDate, yearsToShow)
       .subscribe(data => {
-        this.data = data;
+        this.data = data.sort((t1, t2) => (new Date(t1.date).getTime() - new Date(t2.date).getTime()));
+        this.setYearsDiff(data);
         this.updateChartData(this.data);
       });
   }
@@ -128,4 +133,10 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
     this.chart.updateChart();
   }
 
+  private setYearsDiff(weatherData: WeatherData[]): void {
+    const from: Date = new Date(weatherData[0].date);
+    const to: Date = new Date(weatherData[weatherData.length - 1].date)
+    this.selectedYears = new Date(to.getTime() - from.getTime()).getFullYear() - 1970 + 1;
+    console.log('Years diff between: [', from, '; ', to, '] = ', this.selectedYears);
+  }
 }
