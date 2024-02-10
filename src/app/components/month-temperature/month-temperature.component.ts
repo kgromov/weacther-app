@@ -1,4 +1,4 @@
-import {Component, Inject, LOCALE_ID, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MONTH_NAMES, MonthTemperature, YearByMonthTemperature} from "../../model/season-data";
 import {ExportChart, YEAR_SUMMARY_CHART_CONFIG} from "../../model/chart-config";
 import {ChartjsComponent} from "@ctrl/ngx-chartjs";
@@ -18,7 +18,7 @@ interface MonthName {
   selector: 'app-month-temperature',
   templateUrl: './month-temperature.component.html'
 })
-export class MonthTemperatureComponent implements OnInit {
+export class MonthTemperatureComponent implements OnInit, OnDestroy {
 
   availableYears: number [] = [];
   data: YearByMonthTemperature[] = [];
@@ -45,8 +45,7 @@ export class MonthTemperatureComponent implements OnInit {
     this.weatherService.getYearsToShow()
       .subscribe(yearsRange => {
         console.log('Years range = ', yearsRange);
-        const years: number = yearsRange?.maxYear - yearsRange?.minYear + 1;
-        this.availableYears = [...Array(years || 14).keys()].map(i => i + 1)
+        this.availableYears = [...Array(yearsRange).keys()].map(i => i + 1)
       });
 
     this.seasonService.getMonthTemperature()

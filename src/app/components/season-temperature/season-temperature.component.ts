@@ -38,10 +38,9 @@ export class SeasonTemperatureComponent implements OnInit, OnDestroy {
     });
 
     this.weatherService.getYearsToShow()
-      .subscribe(yearsRange => {
-        console.log('Years range = ', yearsRange);
-        const years: number = yearsRange?.maxYear - yearsRange?.minYear + 1;
-        this.availableYears = [...Array(years || 14).keys()].map(i => i + 1)
+      .subscribe(years => {
+        console.log('Years range = ', years);
+        this.availableYears = [...Array(years).keys()].map(i => i + 1)
       });
 
     this.seasonService.getSeasonsTemperature()

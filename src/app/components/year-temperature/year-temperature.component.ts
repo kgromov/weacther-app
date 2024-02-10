@@ -26,7 +26,7 @@ export class YearTemperatureComponent implements OnInit {
     this.weatherService.getYearsToShow()
       .subscribe(years => {
         console.log('Years range = ', years);
-        this.availableYears = [...Array(years || 14).keys()].map(i => i + 1)
+        this.availableYears = [...Array(years).keys()].map(i => i + 1)
       });
 
     this.seasonService.getYearSummary()
