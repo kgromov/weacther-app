@@ -18,17 +18,6 @@
         <a class="dropdown-item" *ngFor="let year of availableYears" (click)="onYearsChanged(year)">{{ year }}</a>
       </div>
     </li>
-
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle"
-         data-bs-toggle="dropdown" href="#"
-         role="button"
-         aria-haspopup="true"
-         aria-expanded="false">Chart type</a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" *ngFor="let type of chartTypes" (click)="onTypeChanged(type)">{{ type }}</a>
-      </div>
-    </li>
   </ul>
 
   <div class="container">

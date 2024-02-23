@@ -8,6 +8,7 @@ import {TemperatureService} from "../../services/temperature.service";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {ChartDataset} from "chart.js";
+import {WeatherData} from "../../model/weather-data";
 
 interface MonthName {
   name: string,
@@ -21,6 +22,7 @@ interface MonthName {
 export class MonthTemperatureComponent implements OnInit, OnDestroy {
 
   availableYears: number [] = [];
+  yearsRange: number = 0;
   data: YearByMonthTemperature[] = [];
   chartConfig: ExportChart = YEAR_SUMMARY_CHART_CONFIG;
   // @ts-ignore
@@ -94,6 +96,7 @@ export class MonthTemperatureComponent implements OnInit, OnDestroy {
           maxData.push(currentMonth.maxTemp);
         }
       });
+    this.yearsRange = labelsData.length;
 
     this.chartConfig.data.labels = [...labelsData];
     const datasets: ChartDataset[] = this.chartConfig.data.datasets;

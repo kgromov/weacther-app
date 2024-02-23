@@ -16,7 +16,6 @@ import {HttpStatusCode} from "@angular/common/http";
   templateUrl: './daily-temperature.component.html'
 })
 export class DailyTemperatureComponent implements OnInit, OnDestroy {
-  chartTypes: ChartType[] = ['bar', 'line', 'scatter', /*'bubble', 'pie', 'doughnut',*/ 'polarArea', 'radar'];
   data: WeatherData[] = [];
   availableYears: number[] = [];
   selectedYears: number = 0;
@@ -66,12 +65,6 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
 
   public get years(): FormControl {
     return this.form.get('years') as FormControl;
-  }
-
-  onTypeChanged(chartType: string) {
-    console.log('Selected type = ', chartType);
-    // @ts-ignore
-    this.chartConfig.type = chartType;
   }
 
   onYearsChanged(year: number) {
