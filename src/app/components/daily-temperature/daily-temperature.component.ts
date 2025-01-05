@@ -9,7 +9,7 @@ import {BsDatepickerDirective} from "ngx-bootstrap/datepicker";
 import {ChartjsComponent} from "@ctrl/ngx-chartjs";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {takeUntil} from "rxjs/operators";
-import {HttpStatusCode} from "@angular/common/http";
+import { HttpStatusCode } from "@angular/common/http";
 
 @Component({
   selector: 'app-daily-temperature',

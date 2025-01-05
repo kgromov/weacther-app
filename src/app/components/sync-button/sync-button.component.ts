@@ -3,7 +3,7 @@ import {ToastrService} from "ngx-toastr";
 import {TemperatureService} from "../../services/temperature.service";
 import {finalize, Subject} from "rxjs";
 import {SyncStatus} from "../../model/weather-data";
-import {HttpStatusCode} from "@angular/common/http";
+import { HttpStatusCode } from "@angular/common/http";
 import {mergeMap} from "rxjs/operators";
 import {faSpinner, faSync} from "@fortawesome/free-solid-svg-icons";
 
