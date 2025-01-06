@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {YearByMonthTemperature, YearBySeasonTemperature, YearSummary} from "../model/season-data";
@@ -16,25 +16,25 @@ export class TemperatureService {
 
   public getYearSummary(years?: number): Observable<YearSummary[]> {
     const params = this.getYearsToShowParams(years);
-    return this.http.get<YearSummary[]>(`${this.baseUrl}/weather/summary`, {params: params});
+    return this.http.get<YearSummary[]>(`${this.baseUrl}/api/weather/summary`, {params: params});
   }
 
   public getSeasonsTemperature(years?: number): Observable<YearBySeasonTemperature[]> {
     const params = this.getYearsToShowParams(years);
-    return this.http.get<YearBySeasonTemperature[]>(`${this.baseUrl}/weather/seasons`, {params: params});
+    return this.http.get<YearBySeasonTemperature[]>(`${this.baseUrl}/api/weather/seasons`, {params: params});
   }
 
   public getMonthTemperature(years?: number): Observable<YearByMonthTemperature[]> {
     const params = this.getYearsToShowParams(years);
-    return this.http.get<YearByMonthTemperature[]>(`${this.baseUrl}/weather/months`, {params: params});
+    return this.http.get<YearByMonthTemperature[]>(`${this.baseUrl}/api/weather/months`, {params: params});
   }
 
   public isSynced(): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}/isSynced`);
+    return this.http.get<boolean>(`${this.baseUrl}/api/isSynced`);
   }
 
   public syncTemperature(): Observable<SyncStatus> {
-    return this.http.get<SyncStatus>(`${this.baseUrl}/sync`);
+    return this.http.get<SyncStatus>(`${this.baseUrl}/api/sync`);
   }
 
   private getYearsToShowParams(years: number | undefined) {

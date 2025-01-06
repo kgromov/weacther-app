@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Observable} from "rxjs";
 import {WeatherData, YearsRange} from "../model/weather-data";
 import {environment} from "../../environments/environment";
@@ -14,11 +14,11 @@ export class WeatherServiceService {
   }
 
   public getWeatherForToday(): Observable<WeatherData> {
-    return this.http.get<WeatherData>(`${this.baseUrl}/weather/current`);
+    return this.http.get<WeatherData>(`${this.baseUrl}/api/weather/current`);
   }
 
   public getWeatherAtDay(day: string | Date): Observable<WeatherData> {
-    return this.http.get<WeatherData>(`${this.baseUrl}/weather/single/${day}`);
+    return this.http.get<WeatherData>(`${this.baseUrl}/api/weather/single/${day}`);
   }
 
   public getWeatherDayInRange(day: string | Date, years?: number): Observable<WeatherData[]> {
@@ -26,11 +26,11 @@ export class WeatherServiceService {
     if (years) {
       params.years = years;
     }
-    return this.http.get<WeatherData[]>(`${this.baseUrl}/weather/${day}`, {params: params});
+    return this.http.get<WeatherData[]>(`${this.baseUrl}/api/weather/${day}`, {params: params});
   }
 
   public getYearsToShow(): Observable<YearsRange> {
-    return this.http.get<YearsRange>(`${this.baseUrl}/weather/years`);
+    return this.http.get<YearsRange>(`${this.baseUrl}/api/weather/years`);
   }
 
 }

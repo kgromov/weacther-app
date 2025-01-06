@@ -38,7 +38,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 },
                 {
@@ -70,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "weather-app:build:production"
+              "buildTarget": "weather-app:build:production"
             },
             "development": {
-              "browserTarget": "weather-app:build:development"
+              "buildTarget": "weather-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "weather-app:build"
+            "buildTarget": "weather-app:build"
           }
         },
         "test": {

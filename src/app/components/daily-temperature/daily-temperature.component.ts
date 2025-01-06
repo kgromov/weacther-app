@@ -1,7 +1,7 @@
 import {Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {WeatherServiceService} from "../../services/weather-service.service";
 import {Subject} from "rxjs";
-import {ChartDataset, ChartType} from "chart.js";
+import {ChartDataset} from "chart.js";
 import {formatDate} from "@angular/common";
 import {SyncStatus, WeatherData} from "../../model/weather-data";
 import {DAILY_CHART_CONFIG, ExportChart} from "../../model/chart-config";
@@ -9,7 +9,7 @@ import {BsDatepickerDirective} from "ngx-bootstrap/datepicker";
 import {ChartjsComponent} from "@ctrl/ngx-chartjs";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {takeUntil} from "rxjs/operators";
-import {HttpStatusCode} from "@angular/common/http";
+import { HttpStatusCode } from "@angular/common/http";
 
 @Component({
   selector: 'app-daily-temperature',
