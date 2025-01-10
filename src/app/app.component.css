@@ -1,0 +1,5 @@
+.bg-image {
+  background-image: url("/assets/images/odessa.jpg");
+  /*background-image: url("/assets/images/odessa_min_opacity.png");*/
+  /*z-index: -1;*/
+}

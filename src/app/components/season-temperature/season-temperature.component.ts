@@ -12,6 +12,7 @@ import {takeUntil} from "rxjs/operators";
 @Component({
   selector: 'app-season-temperature',
   templateUrl: './season-temperature.component.html',
+  styleUrls: ['../../app.component.css']
 })
 export class SeasonTemperatureComponent implements OnInit, OnDestroy {
   availableYears: number [] = [];

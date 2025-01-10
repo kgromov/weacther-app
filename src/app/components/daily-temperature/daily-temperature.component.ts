@@ -13,7 +13,8 @@ import { HttpStatusCode } from "@angular/common/http";
 
 @Component({
   selector: 'app-daily-temperature',
-  templateUrl: './daily-temperature.component.html'
+  templateUrl: './daily-temperature.component.html',
+  styleUrls: ['../../app.component.css']
 })
 export class DailyTemperatureComponent implements OnInit, OnDestroy {
   data: WeatherData[] = [];
@@ -39,6 +40,10 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
       selectedDate: null,
       years: null
     });
+    // if (this.chart) {
+    //   this.chart.ref.nativeElement.className = 'bg-image';
+    //   // this.chart.ref.nativeElement.attributeStyleMap.set("background-image", "url(/assets/images/odessa.jpg)");
+    // }
 
     this.fetchYearsToShow();
 
@@ -102,6 +107,14 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
   }
 
   private updateChartData(weatherData: WeatherData[]): void {
+    // // @ts-ignore
+    // this.chartConfig.options.plugins?.tooltip?.external = function (context) {
+    //   console.log(context.tooltip.title);
+    //   context.tooltip.dataPoints.forEach(point => {
+    //     console.log(point.label);
+    //     console.log(point.formattedValue);
+    //   });
+    // };
     const labelsData: any[] = [];
     const morningData: any[] = [];
     const afternoonData: any[] = [];
@@ -122,6 +135,7 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
     datasets[2].data = [...eveningData];
     datasets[3].data = [...nightData];
     console.log('Chart data: ', this.chartConfig);
+    console.log('Chart element: ', this.chart.ref.nativeElement.innerHTML);
     // to trigger refresh
     this.chart.updateChart();
   }
@@ -132,4 +146,5 @@ export class DailyTemperatureComponent implements OnInit, OnDestroy {
     this.selectedYears = new Date(to.getTime() - from.getTime()).getFullYear() - 1970 + 1;
     console.log('Years diff between: [', from, '; ', to, '] = ', this.selectedYears);
   }
+
 }

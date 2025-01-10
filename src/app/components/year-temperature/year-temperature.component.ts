@@ -9,6 +9,7 @@ import {WeatherServiceService} from "../../services/weather-service.service";
 @Component({
   selector: 'app-year-temperature',
   templateUrl: './year-temperature.component.html',
+  styleUrls: ['../../app.component.css']
 })
 export class YearTemperatureComponent implements OnInit {
   @Input() public availableYears: number [] = [];
