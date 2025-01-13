@@ -1,9 +1,36 @@
 import {ChartData, ChartOptions, ChartType} from "chart.js";
 
 export interface ExportChart {
-  options: ChartOptions;
   type: ChartType;
   data: ChartData;
+  options: ChartOptions;
+}
+
+export const DEFAULT_CONFIG: ExportChart  = {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [],
+  },
+  options: {
+    responsive: true,
+    aspectRatio: 2,
+    plugins: {
+      tooltip: {
+        enabled: true,
+        position: 'nearest'
+      },
+      legend: {
+        display: true,
+        position: 'top',
+        labels: {
+          font: {
+            size: 14
+          }
+        }
+      }
+    }
+  }
 }
 
 export const DAILY_CHART_CONFIG: ExportChart  = {
@@ -169,7 +196,6 @@ export const YEAR_SUMMARY_CHART_CONFIG: ExportChart  = {
         borderColor: 'cyan',
         pointBackgroundColor: 'blue',
         pointBorderColor: 'blue',
-
         borderWidth: 2
       },
       {

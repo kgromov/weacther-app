@@ -36,6 +36,8 @@ export interface YearSummary {
   min: number,
   max: number,
   avg: number
+  maxTempDates?: string[],
+  minTempDates?: string[]
 }
 
 export interface MonthTemperature {
