@@ -1,5 +1,5 @@
 import {Component, Inject, Input, LOCALE_ID, OnInit, ViewChild} from '@angular/core';
-import {YearSummary} from "../../model/season-data";
+import {AggregateType, YearSummary} from "../../model/season-data";
 import {ExportChart, YEAR_SUMMARY_CHART_CONFIG} from "../../model/chart-config";
 import {ChartjsComponent} from "@ctrl/ngx-chartjs";
 import {TemperatureService} from "../../services/temperature.service";
@@ -14,7 +14,8 @@ import {
   TooltipModel
 } from "chart.js";
 import {WeatherServiceService} from "../../services/weather-service.service";
-import {callback} from "chart.js/helpers";
+import {formatDate} from "@angular/common";
+
 
 @Component({
   selector: 'app-year-temperature',
@@ -70,8 +71,8 @@ export class YearTemperatureComponent implements OnInit {
     this.chart.updateChart();
   }
 
-  private formatToIso(extremumDates: string[] = []): string {
-    return extremumDates.map(date => new Date(date).toISOString().slice(0, 10))
+  private formatToMonthDay(extremumDates: string[] = []): string {
+    return extremumDates.map(date => formatDate(new Date(date), 'MMM, dd', this.locale))
       .join('; ');
   }
 
@@ -86,25 +87,26 @@ export class YearTemperatureComponent implements OnInit {
         // },
         callbacks: {
           label: (context: ScriptableContext<any>) => {
-            /*
-            export interface ScriptableContext<TType extends ChartType> {
-                active: boolean;
-                chart: Chart;
-                dataIndex: number;
-                dataset: UnionToIntersection<ChartDataset<TType>>;
-                datasetIndex: number;
-                parsed: UnionToIntersection<ParsedDataType<TType>>;
-                raw: unknown;
-             */
-            console.log('callback', context);
+            console.trace('callback', context);
             let label = context.dataset.label || '';
-            console.log('label = ', label);
-            // TODO: format to 'MMM, dd' instead
-            if (this.data?.length > 0 && context.datasetIndex !== 1) {
-              const date = this.formatToIso(this.data[context.dataIndex][context.datasetIndex === 0 ? 'minTempDates' : 'maxTempDates']);
-              label = `${label}: ${context.raw} (${date})`;
+            console.trace('label = ', label);
+            if (this.data?.length > 0) {
+              const aggregation: AggregateType = Object.values(AggregateType)[context.datasetIndex];
+              switch (aggregation) {
+                case AggregateType.MIN:
+                  const minDate = this.formatToMonthDay(this.data[context.dataIndex]['minTempDates']);
+                  label = `${label}: ${context.raw} (${minDate})`;
+                  break;
+                case AggregateType.MAX:
+                  const maxDate = this.formatToMonthDay(this.data[context.dataIndex]['maxTempDates']);
+                  label = `${label}: ${context.raw} (${maxDate})`;
+                  break;
+                case AggregateType.AVG:
+                  label = `${label}: ${Math.round((context.raw as number) * 100) / 100}`;
+                  break;
+              }
             }
-            console.log('modified label = ', label);
+            console.trace('modified label = ', label);
             return label;
           }
         }
