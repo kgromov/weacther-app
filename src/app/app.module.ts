@@ -4,7 +4,7 @@ import {AppComponent} from './app.component';
 import {ChartjsModule} from "@ctrl/ngx-chartjs";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DailyTemperatureComponent} from './components/daily-temperature/daily-temperature.component';
 import {SeasonTemperatureComponent} from './components/season-temperature/season-temperature.component';
@@ -17,24 +17,30 @@ import {ToastrModule} from "ngx-toastr";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
-@NgModule({ declarations: [
-        AppComponent,
-        DailyTemperatureComponent,
-        SeasonTemperatureComponent,
-        YearTemperatureComponent,
-        AbstractTemperatureDirective,
-        MonthTemperatureComponent,
-        SyncButtonComponent
-    ],
-    bootstrap: [AppComponent], imports: [AppRoutingModule,
-        BrowserModule,
-        ReactiveFormsModule,
-        ChartjsModule,
-        BrowserAnimationsModule,
-        BsDatepickerModule.forRoot(),
-        ToastrModule.forRoot({
-            positionClass: 'toast-bottom-right'
-        }),
-        FontAwesomeModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [
+    AppComponent,
+    DailyTemperatureComponent,
+    SeasonTemperatureComponent,
+    YearTemperatureComponent,
+    AbstractTemperatureDirective,
+    MonthTemperatureComponent,
+    SyncButtonComponent
+  ],
+  bootstrap: [AppComponent],
+  imports: [
+    AppRoutingModule,
+    BrowserModule,
+    ReactiveFormsModule,
+    ChartjsModule,
+    BrowserAnimationsModule,
+    BsDatepickerModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+    }),
+    FontAwesomeModule
+  ],
+  providers: [provideHttpClient(withInterceptorsFromDi())]
+})
 export class AppModule {
 }

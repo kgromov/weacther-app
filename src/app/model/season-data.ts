@@ -13,9 +13,9 @@ export const MONTH_NAMES = [
 ];
 
 export enum AggregateType {
-  MAX = 'MAX',
   MIN = 'MIN',
-  AVG = 'AVG'
+  AVG = 'AVG',
+  MAX = 'MAX'
 }
 
 export interface SeasonTemperature {
@@ -36,6 +36,8 @@ export interface YearSummary {
   min: number,
   max: number,
   avg: number
+  maxTempDates?: string[],
+  minTempDates?: string[]
 }
 
 export interface MonthTemperature {

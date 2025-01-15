@@ -8,7 +8,6 @@ import {TemperatureService} from "../../services/temperature.service";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {ChartDataset} from "chart.js";
-import {WeatherData} from "../../model/weather-data";
 
 interface MonthName {
   name: string,
@@ -17,7 +16,8 @@ interface MonthName {
 
 @Component({
   selector: 'app-month-temperature',
-  templateUrl: './month-temperature.component.html'
+  templateUrl: './month-temperature.component.html',
+  styleUrls: ['../../app.component.css']
 })
 export class MonthTemperatureComponent implements OnInit, OnDestroy {
 
